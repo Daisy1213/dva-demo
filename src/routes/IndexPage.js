@@ -1,21 +1,50 @@
 import React from 'react';
-import { connect } from 'dva';
 import styles from './IndexPage.css';
+import {connect} from 'dva';
 
-function IndexPage() {
-  return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to dva!</h1>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
-        <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md">Getting Started</a></li>
-      </ul>
-    </div>
-  );
+class IndexPage extends React.Component {
+  render() {
+      console.log(this.props);
+      const {count, dispatch} = this.props;
+    return (
+      <div className={styles.normal}>
+        <div className={styles.record}>Highest Record: {count.record}</div>
+        <div className={styles.current}>{count.current}</div>
+        <div className={styles.button}>
+          <button onClick={() => {
+            dispatch({type: 'count/add'})
+          }}>+
+          </button>
+        </div>
+      </div>
+    )
+  }
 }
 
-IndexPage.propTypes = {
+// function IndexPage() {
+//   console.log(this.props);
+//   const {count, dispatch} = this.props;
+//   return (
+//     <div className={styles.normal}>
+//       <div className={styles.record}>Highest Record: {count.record}</div>
+//       <div className={styles.current}>{count.current}</div>
+//       <div className={styles.button}>
+//         <button onClick={() => {dispatch({type: 'count/add'})}}>+</button>
+//       </div>
+//     </div>
+//   );
+// }
+
+const mapStateToProps = (state) => {
+  return {
+    count: state.count
+  };
 };
 
-export default connect()(IndexPage);
+const mapDispatchToProps = (disptcha) => {
+  return {
+    addCount: disptcha({type: 'count/add'})
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IndexPage);
