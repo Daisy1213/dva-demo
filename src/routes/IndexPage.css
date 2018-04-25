@@ -18,8 +18,11 @@
   padding: 40px 0;
 }
 
-.button {
+.button{
   text-align: center;
+}
+
+button {
   width: 100px;
   height: 40px;
   background: #aaa;
